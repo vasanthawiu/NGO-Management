@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/commonStyle.css">
+    <script src="js/ngoHomeService.js"></script>
+</head>
+<body onload="onPageload()">
+  
+  <div class="container-fluid fixed-top py-3" style="background-color: #555;">
+    <div class="row collapse show no-gutters d-flex h-100 position-relative">
+        <div class="col-3 px-0 w-sidebar navbar-collapse collapse d-none d-md-flex">
+            <!-- spacer col -->
+        </div>
+        <div class="col px-3 px-md-0">
+            <!-- toggler -->
+            <a data-toggle="collapse" href="#" data-target=".collapse" role="button" class="text-white p-1">
+                <i class="fa fa-bars fa-lg"></i>
+            </a>
+        </div>
+        <div class="col px-3 px-md-0 donationCls">
+          <a style="text-decoration: none;font-size: 18px;" data-toggle="modal" data-target="#donationModelId" class="text-white" href="#">Add Donation Here <i class="fa fa-plus"></i></i></a>
+        </div>
+        <div class="col px-3 px-md-0 participateCls">
+          <a style="text-decoration: none;font-size: 18px;" data-toggle="modal" data-target="#participatelId" class="text-white" href="#">Add Participate Here <i class="fa fa-plus"></i></i></a>
+        </div>
+        <div class="col px-3 px-md-0 referCls">
+          <a style="text-decoration: none;font-size: 18px;" data-toggle="modal" data-target="#referModallId" class="text-white" href="#">Add Refer Here <i class="fa fa-plus"></i></i></a>
+        </div>
+        <div>
+          <i class="fa fa-sign-out text-white" style="font-size: 20px;cursor: pointer;" onclick="logout()">Logout</i> 
+      </div>
+    </div>
+</div>
+<div class="container-fluid px-0">
+    <div class="row collapse show no-gutters d-flex h-100 position-relative">
+        <div class="col-3 p-0 h-100 navbar-collapse collapse d-none d-md-flex sidebar">
+            <!-- fixed sidebar -->
+            <div class="navbar-dark bg-themecolor text-white position-fixed h-100 align-self-start w-sidebar" style="width: 200px;">
+              <img src="images/ngoImg4.jpg" style="height: 58px;width: 199px;"> 
+              <a data-toggle="collapse" class="px-1 d-inline d-md-none text-white" href="#" data-target=".collapse"><i class="fa fa-bars"></i></a>
+                <ul class="nav flex-column flex-nowrap text-truncate">
+                    <li class="nav-item">
+                      <a class="active menu-active-cls" menuType="DONATION" href="#">Donation</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="menu-active-cls" menuType="PARTICIPATE" href="#">Participate</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="menu-active-cls" menuType="REFER" href="#">Refer</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Donation Div -->
+        <div class="col-md-11 donationCls" style="margin-left: 200px; margin-top: 56px;" id="donationMainDiv">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Donation Id</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Purpose</th>
+                <th scope="col">Donation Data</th>
+              </tr>
+            </thead>
+            <tbody id="donationBodyId">
+            </tbody>
+          </table>
+      </div>
+      <!-- Participate Div -->
+      <div class="col-md-11 participateCls" style="margin-left: 200px; margin-top: 56px;" id="participateMainDivId">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Participate Id</th>
+              <th scope="col">Campaign Name</th>
+              <th scope="col">campaign Data</th>
+            </tr>
+          </thead>
+          <tbody id="participateBodyId">
+          </tbody>
+        </table>
+    </div>
+    <!-- Refer Div -->
+    <div class="col-md-11 referCls" style="margin-left: 200px; margin-top: 56px;" id="referMainDivId">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Refer Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Email Id</th>
+            <th scope="col">Contact#</th>
+            <th scope="col">Comment</th>
+          </tr>
+        </thead>
+        <tbody id="referBodyId">
+        </tbody>
+      </table>
+  </div>
+  </div>
+  </div>
+  <!-- Donation modal -->
+  <div class="modal fade" id="donationModelId">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-themecolor">
+          <h4 class="modal-title">Add Donation</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form>
+              <div class="form-row">
+                <div class="col-md-12 mb-3">
+                  <label for="donationAmmountId">Amount</label>
+                  <input type="text" class="form-control" id="donationAmmountId" placeholder="Enter Amount" required>
+                </div>
+                <div class="col-md-12 mb-3">
+                  <label for="donationDateId">Donation Date</label>
+                  <input type="date" class="form-control" id="donationDateId" required>
+                </div>
+                <div class="col-md-12 mb-3">
+                  <label for="donationPurposeId">Purpose</label>
+                  <textarea id="donationPurposeId" class="form-control"></textarea>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="reset" class="border btn btn-light" data-dismiss="modal">Close</button>
+          <button type="button" class="border btn btn-primary" onclick="submitDonationdata()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Participate modal -->
+  <div class="modal fade" id="participatelId">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-themecolor">
+          <h4 class="modal-title">Add Participate</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form>
+              <div class="form-row">
+                <div class="col-md-12 mb-3">
+                  <label for="campaignNameId">Campaign Name</label>
+                  <select class="form-control" id="campaignNameId">
+                    <option value="">Select</option>
+                    <option value="Sakhi">Sakhi</option>
+                    <option value="NetraBindu">NetraBindu</option>
+                    <option value="EducationForAll">EducationForAll</option>
+                </select>
+                </div>
+                <div class="col-md-12 mb-3">
+                  <label for="campaignDateId">Campaign Date</label>
+                  <input type="date" class="form-control" id="campaignDateId" required>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="reset" class="border btn btn-light" data-dismiss="modal">Close</button>
+          <button type="button" class="border btn btn-primary" onclick="submitParticipateData()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Refer modal -->
+  <div class="modal fade" id="referModallId">
+    <div class="modal-dialog" style="max-width: 750px!important;">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-themecolor">
+          <h4 class="modal-title">Add Refer</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="col-md-6 mb-3">
+                <label for="memberNameId">Name</label>
+                <input type="text" class="form-control" id="memberNameId" placeholder="Enter Name" value="" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="memberNameId">Status</label>
+                <input type="text" class="form-control" id="statusId" placeholder="Enter Status" value="" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="emailId">Email</label>
+                <input type="email" class="form-control" id="userEmailId" value="" placeholder="Enter Email" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="contactId">Contact no.</label>
+                <input type="number" class="form-control" id="contactId" placeholder="Enter Contact no." required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="commentId">Comment</label>
+                <textarea id="commentId" class="form-control"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="reset" class="border btn btn-light" data-dismiss="modal">Close</button>
+          <button type="button" class="border btn btn-primary" onclick="submitReferData()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
